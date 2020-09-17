@@ -54,7 +54,8 @@ class FuruWatcher {
         let tx = await web3.eth.getTransaction(txHash);
 
         // ** Step 1: Analyze the TX if it relates to the furucombo proxy contract
-        if (furucomboProxyContractAddr == tx.to.toLowerCase()) {
+        // avoid tx is null so that tx.to.toLowerCase() will fail.
+        if (tx != null && furucomboProxyContractAddr == tx.to.toLowerCase()) {
           // TODO: add another condition to filter on successfull furucombo status TXs only
           // what the fuck - 'web3.eth.getTransactionReceipt(txHash).status' returns undefined for all TX, fix later
           console.log("Successful Furucombo Tx found on block: " + number);
